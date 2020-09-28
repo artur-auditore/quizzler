@@ -47,11 +47,13 @@ class _QuizPageState extends State<QuizPage> {
         
       if(quizBrain.isFinished()){
         final snack = SnackBar(
-          content: Text("You finished this quizz. Thank you so much!"),
+          content: Text("You finished this quizz! Your Score: ${quizBrain.calcRights().toStringAsFixed(1)}%"), 
+          duration: Duration(seconds: 5),
         );
         Scaffold.of(context).showSnackBar(snack);
         quizBrain.reset();
         scoreKeeper.clear();
+        quizBrain.deleteScore();
       } else {
         quizBrain.nextQuestion();
       }

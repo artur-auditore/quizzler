@@ -65,4 +65,9 @@ class QuizBrain{
   double calcRights(){
     return (_corrects/_questionBank.length)*100;
   }
+
+  void deleteScore(){
+    _corrects = 0;
+  }
+
 }
