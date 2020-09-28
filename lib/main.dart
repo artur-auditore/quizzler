@@ -37,21 +37,25 @@ class _QuizPageState extends State<QuizPage> {
     String correctAnswer = quizBrain.getCorrectAnswer();
 
     setState(() {
-      if (quizBrain.isFinished() == false) {
-        if (userPickedAnswer == correctAnswer) {
-          quizBrain.addCorrects();
-          scoreKeeper.add(Icon(Icons.check,color: Colors.green,));
-        } else {
-          scoreKeeper.add(Icon(Icons.close,color: Colors.red,));
-        }
-        quizBrain.nextQuestion();
-
+      
+      if (userPickedAnswer == correctAnswer) {
+        quizBrain.addCorrects();
+        scoreKeeper.add(Icon(Icons.check,color: Colors.green,));
       } else {
-        quizBrain.reset();
-        Text("Thank you for your answers!");
-        scoreKeeper = [];
-        
+        scoreKeeper.add(Icon(Icons.close,color: Colors.red,));
       }
+        
+      if(quizBrain.isFinished()){
+        final snack = SnackBar(
+          content: Text("You finished this quizz. Thank you so much!"),
+        );
+        Scaffold.of(context).showSnackBar(snack);
+        quizBrain.reset();
+        scoreKeeper.clear();
+      } else {
+        quizBrain.nextQuestion();
+      }
+
     });
   }
 
